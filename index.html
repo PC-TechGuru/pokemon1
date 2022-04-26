@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #table {
+        width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+      <div class="main">
+          <div class="left">
+            <button onclick="getdata()">search</button>
+            <div id="table"></div>
+        </div>
+          <div class="right">
+            <div id="id"></div>
+            <div id="name"></div>
+            <div id="height"></div>
+            <div id="weight"></div>
+            <div id="abilities"></div>
+          </div>
+      </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      var Arr = [];
+      var arr = []
+      var height = [];
+      var weight = [];
+      var ability = [];
+      var moves = [];
+      var table = document.getElementById("table");
+
+      function getdata() {
+        for (var i=0;i<20;i++){
+            fetch(` https://pokeapi.co/api/v2/pokemon/${i}/`)
+          .then((Response) => {
+            Response.json()
+              .then((result) => {
+                  Arr.push(result["name"])
+                  arr.push(result["id"])
+                  height.push(result["height"])
+                  weight.push(result["weight"])
+                  
+                  var abiliti = result["abilities"]
+                  console.log(ability)
+                  for (var j=0;j<abiliti.length;j++){
+                    ability.push(result["abilities"][j]["ability"]["name"])
+                  }
+                  
+                  displaydata(result)
+              })
+              .catch((Error) => {
+                console.log(Error);
+              });
+          })
+          .catch((Error) => {
+            console.log(Error);
+          });
+        }
+        
+      }
+      
+      function displaydata(result) {
+        console.log(result);
+        document.getElementById("table").innerHTML =  `table = ${Arr}`
+        document.getElementById("id").innerHTML = `id = ${arr}`
+        document.getElementById("height").innerHTML = `height = ${height}`
+        document.getElementById("weight").innerHTML = `weight = ${weight}`
+        document.getElementById("abilities").innerHTML =  `ability = ${ability[0]}`
+        for(var i=0;i<20;i++){
+            console.log(push)
+        }
+
+      }
+    </script>
+  </body>
+</html>
